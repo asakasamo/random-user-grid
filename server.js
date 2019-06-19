@@ -1,30 +1,35 @@
 /**
- * A simple Node web server that serves index.html to localhost.
+ * A simple Node web server that serves files to localhost.
  */
 
 const http = require("http");
 const fs = require("fs");
+const url = require("url");
 
 /**
- * Synchronously retrieves and returns the contents of index.html, or an error string if unavailable.
- * @returns {object} the contents of index.html
+ * Synchronously retrieves and returns the contents of a file, or an error string if unavailable.
+ * An empty request path will return the contents of index.html.
+ *
+ * @param {string} requestPath the requested path
+ * @returns {object} the contents of the file
  */
-function getIndexContents() {
+function getFileContents(requestPath = "") {
+   requestPath = requestPath.slice(1);
+   if (!requestPath) requestPath = "index.html";
+
    try {
-      return fs.readFileSync("index.html");
+      return fs.readFileSync(requestPath);
    } catch (error) {
       const consoleRed = "\x1b[31m";
-      const errorMessage =
-         "!! Error loading index.html. Make sure it is in the same directory as server.js.";
-
+      const errorMessage = `Invalid file path: ${requestPath}`;
       console.log(consoleRed, errorMessage);
 
-      return "index.html not available.";
+      return "File not found";
    }
 }
 
 /**
- * Prints the starting message for the server to the console.
+ * Prints the starting message for the server to the console, including what port it's on.
  */
 function printStartMessage() {
    const port = server.address().port;
@@ -35,14 +40,16 @@ function printStartMessage() {
    console.log(consoleGreen, startMessage);
 }
 
-// configure the server to respond to all requests with index.html
+// configure the server to respond with whatever's requested
 const server = http.createServer((request, response) => {
-   const indexHtml = getIndexContents();
-   response.writeHead(200, { "Content-Type": "text/html" });
-   response.write(indexHtml);
+   const requestPath = url.parse(request.url).pathname;
+   const fileContents = getFileContents(requestPath);
+
+   response.writeHead(200);
+   response.write(fileContents);
    response.end();
 });
 
-//start the server
+//start the server on a random port
 server.listen(0);
 printStartMessage();
