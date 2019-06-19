@@ -40,9 +40,34 @@ function createUserElement(user = placeholderUser) {
    return userDiv;
 }
 
-// Execution
+/**
+ * Fetches a specified number of random users and returns an array of user objects, with each object
+ * containing the user's full name, email, and image url.
+ *
+ * @param {string} [gender="any"] the gender of the users
+ * @param {number} [count=9] the number of random users to fetch
+ * @returns {{ name: string, imageUrl: string, email: string }[]} the array of random users
+ */
+async function fetchRandomUsers(gender = "any", count = 9) {
+   const requestUrl = `https://randomuser.me/api/?inc=name,picture,email&results=${count}&gender=${gender}&`;
+   const response = await fetch(requestUrl);
+   const json = await response.json();
+   const results = json.results;
 
-const userGrid = document.querySelector("#user-grid");
-for (let i = 0; i < 9; i++) {
-   userGrid.appendChild(createUserElement());
+   const users = results.map((userData) => {
+      return {
+         name: `${userData.name.first} ${userData.name.last}`,
+         email: userData.email,
+         imageUrl: userData.picture.large
+      };
+   });
+
+   console.log(users);
+
+   return users;
 }
+
+function randomizeUserGrid(gender) {}
+
+// Execution
+console.log(fetchRandomUsers());
