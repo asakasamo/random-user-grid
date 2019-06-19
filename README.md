@@ -1,4 +1,4 @@
-# Random User Grid by Al-John Sakasamo
+# Random User Grid
 A full-stack Javascript project that displays a list of random users by gender. Random users are fetched from the 
 Random User Generator API at [Randomuser.me](Randomuser.me).
 
