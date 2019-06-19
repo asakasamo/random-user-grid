@@ -10,6 +10,10 @@ const placeholderUser = {
    email: "placeholder@email.com"
 };
 
+const maleButton = document.querySelector(".male");
+const femaleButton = document.querySelector(".female");
+const userGrid = document.querySelector("#user-grid");
+
 // Functions
 
 /**
@@ -66,28 +70,42 @@ async function fetchRandomUsers(gender = "any", count = 9) {
 }
 
 /**
- * Clears the current user grid, and repopulates it based on the specified gender.
+ * Clears the current user grid, and repopulates it based on the specified gender. The buttons are
+ * disabled during any randomization process to prevent concurrent requests. A fade-out/fade-in
+ * transition is added to the grid as well.
  *
  * @param {string} gender the gender
  */
 async function randomizeUserGrid(gender) {
+   setButtonEnabledState(false);
+
    const userData = await fetchRandomUsers(gender);
    const userElements = userData.map((user) => createUserElement(user));
-   const userGrid = document.querySelector("#user-grid");
 
-   // clear the current grid
-   userGrid.innerHTML = "";
+   // fade out the grid
+   userGrid.classList.add("invisible");
+   userGrid.addEventListener("transitionend", () => {
+      // clear the current grid
+      userGrid.innerHTML = "";
 
-   // Append the new user elements
-   userElements.forEach((userElement) => {
-      userGrid.appendChild(userElement);
+      // Append the new user elements
+      userElements.forEach((userElement) => {
+         userGrid.appendChild(userElement);
+      });
+
+      // fade back in
+      userGrid.classList.remove("invisible");
    });
+
+   setButtonEnabledState(true);
+}
+
+function setButtonEnabledState(enabled) {
+   maleButton.disabled = !enabled;
+   femaleButton.disabled = !enabled;
 }
 
 // Execution
-
-const maleButton = document.querySelector(".male");
-const femaleButton = document.querySelector(".female");
 
 maleButton.addEventListener("click", randomizeUserGrid.bind(this, "male"));
 femaleButton.addEventListener("click", randomizeUserGrid.bind(this, "female"));
