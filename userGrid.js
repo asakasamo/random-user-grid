@@ -100,6 +100,10 @@ async function randomizeUserGrid(gender) {
    setButtonEnabledState(true);
 }
 
+/**
+ * Sets the enabled state of the button
+ * @param {boolean} enabled whether or not the button is enabled
+ */
 function setButtonEnabledState(enabled) {
    maleButton.disabled = !enabled;
    femaleButton.disabled = !enabled;
