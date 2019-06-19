@@ -49,7 +49,7 @@ function createUserElement(user = placeholderUser) {
  * @returns {{ name: string, imageUrl: string, email: string }[]} the array of random users
  */
 async function fetchRandomUsers(gender = "any", count = 9) {
-   const requestUrl = `https://randomuser.me/api/?inc=name,picture,email&results=${count}&gender=${gender}&`;
+   const requestUrl = `https://randomuser.me/api/?inc=name,picture,email&results=${count}&gender=${gender}`;
    const response = await fetch(requestUrl);
    const json = await response.json();
    const results = json.results;
@@ -62,12 +62,31 @@ async function fetchRandomUsers(gender = "any", count = 9) {
       };
    });
 
-   console.log(users);
-
    return users;
 }
 
-function randomizeUserGrid(gender) {}
+/**
+ * Clears the current user grid, and repopulates it based on the specified gender.
+ *
+ * @param {string} gender the gender
+ */
+async function randomizeUserGrid(gender) {
+   const userData = await fetchRandomUsers(gender);
+   const userElements = userData.map((user) => createUserElement(user));
+   const userGrid = document.querySelector("#user-grid");
+
+   // clear the current grid
+   userGrid.innerHTML = "";
+
+   userElements.forEach((userElement) => {
+      userGrid.appendChild(userElement);
+   });
+}
 
 // Execution
-console.log(fetchRandomUsers());
+
+const maleButton = document.querySelector(".male");
+const femaleButton = document.querySelector(".female");
+
+maleButton.addEventListener("click", randomizeUserGrid.bind(this, "male"));
+femaleButton.addEventListener("click", randomizeUserGrid.bind(this, "female"));
