@@ -1,0 +1,11 @@
+{
+   "name": "random-user-grid",
+   "version": "1.0.0",
+   "description": "Displays a random list of users by gender",
+   "main": "index.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "Al-John Sakasamo",
+   "license": "ISC"
+}
