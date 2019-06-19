@@ -4,18 +4,18 @@ h4 {
    padding: 0;
 }
 
-#person-grid {
+#user-grid {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
 }
 
 @media screen and (max-width: 500px) {
-   #person-grid {
+   #user-grid {
       grid-template-columns: 1fr;
    }
 }
 
-div.person {
+div.user {
    border: 1px solid gray;
    display: flex;
    flex-direction: column;
