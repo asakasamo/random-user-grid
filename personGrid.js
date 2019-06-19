@@ -21,6 +21,7 @@ const placeholderPerson = {
  */
 function createPersonElement(person = placeholderPerson) {
    const personDiv = document.createElement("div");
+   personDiv.classList.add("person");
 
    const image = document.createElement("img");
    image.src = person.imageUrl;

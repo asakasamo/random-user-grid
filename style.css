@@ -1,9 +1,23 @@
-div.person {
-   border: 1px solid gray;
-}
-
 h3,
 h4 {
    margin: 0;
    padding: 0;
+}
+
+#person-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media screen and (max-width: 500px) {
+   #person-grid {
+      grid-template-columns: 1fr;
+   }
+}
+
+div.person {
+   border: 1px solid gray;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
