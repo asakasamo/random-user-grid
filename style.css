@@ -1,18 +1,37 @@
+/* Global styles */
+
 body {
    text-align: center;
    font-family: sans-serif;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
 }
 
-h1,
+h2,
 h3,
 h4 {
    padding: 0;
    margin: 0;
 }
 
+/* Header style */
+
+header {
+   margin: 10px;
+}
+
+span.title {
+   font-weight: bold;
+}
+
+/* User grid wrapper */
+
 #user-grid {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
+   grid-gap: 10px;
+   width: 70vw;
 }
 
 @media screen and (max-width: 500px) {
@@ -22,7 +41,8 @@ h4 {
 }
 
 div.user {
-   border: 1px solid gray;
+   background-color: #eee;
+   padding: 5px;
    display: flex;
    flex-direction: column;
    align-items: center;

@@ -30,7 +30,7 @@ function createUserElement(user = placeholderUser) {
    const name = document.createElement("h3");
    name.textContent = user.name;
 
-   const email = document.createElement("h4");
+   const email = document.createElement("span");
    email.textContent = user.email;
 
    userDiv.appendChild(image);
@@ -78,6 +78,7 @@ async function randomizeUserGrid(gender) {
    // clear the current grid
    userGrid.innerHTML = "";
 
+   // Append the new user elements
    userElements.forEach((userElement) => {
       userGrid.appendChild(userElement);
    });
